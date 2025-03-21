@@ -1,0 +1,23 @@
+@model WebApplication1.Models.Piskvorky
+
+@{
+    ViewData["Title"] = "Piškvorky";
+}
+
+<table class="table-bordered p-3" id="piskvorky-table">
+    <tr>
+        <td>@Model.HerniPole.Substring(0, 1)</td>
+        <td>@Model.HerniPole.Substring(1, 1)</td>
+        <td>@Model.HerniPole.Substring(2, 1)</td>
+    </tr>
+    <tr>
+        <td>@Model.HerniPole.Substring(3, 1)</td>
+        <td>@Model.HerniPole.Substring(4, 1)</td>
+        <td>@Model.HerniPole.Substring(5, 1)</td>
+    </tr>
+    <tr>
+        <td>@Model.HerniPole.Substring(6, 1)</td>
+        <td>@Model.HerniPole.Substring(7, 1)</td>
+        <td>@Model.HerniPole.Substring(8, 1)</td>
+    </tr>
+</table>
