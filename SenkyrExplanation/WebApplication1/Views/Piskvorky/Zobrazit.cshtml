@@ -1,0 +1,27 @@
+@model WebApplication1.Models.Piskvorky
+
+@{
+    ViewData["Title"] = "Piškvorky 3x3";
+}
+
+<p>Na tahu je @Model.AktivniHrac</p>
+
+<table class="table-bordered" id="piskvorky-table">
+    <tr>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=0&id=@Model.Id">@Model.HerniPole.Substring(0, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=1&id=@Model.Id">@Model.HerniPole.Substring(1, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=2&id=@Model.Id">@Model.HerniPole.Substring(2, 1)</a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=3&id=@Model.Id">@Model.HerniPole.Substring(3, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=4&id=@Model.Id">@Model.HerniPole.Substring(4, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=5&id=@Model.Id">@Model.HerniPole.Substring(5, 1)</a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=6&id=@Model.Id">@Model.HerniPole.Substring(6, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=7&id=@Model.Id">@Model.HerniPole.Substring(7, 1)</a></td>
+        <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=8&id=@Model.Id">@Model.HerniPole.Substring(8, 1)</a></td>
+    </tr>
+</table>
+
+<a class="btn btn-danger" href="/Piskvorky/Reset/?id=@Model.Id">Vyresetovat hru</a>
