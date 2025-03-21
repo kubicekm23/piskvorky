@@ -22,19 +22,22 @@ public class PiskvorkyController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var Piskvorky = _context.PiskvorkyModel.ToList();
+        
+        return View(Piskvorky);
     }
 
     public IActionResult Zobrazit(int id)
     {
-        var piskvorky = _context.PiskvorkyModel.First();
+        Console.WriteLine(id);
+        var piskvorky = _context.PiskvorkyModel.Find(id);
         
         return View(piskvorky);
     }
 
-    public IActionResult Tahnout(int policko)
+    public IActionResult Tahnout(int policko, int id)
     {
-        Piskvorky hra = _context.PiskvorkyModel.First();
+        Piskvorky hra = _context.PiskvorkyModel.Find(id);
         char aktivniHrac = hra.AktivniHrac;
 
         if (hra.HerniPole[policko] == '-')
@@ -62,5 +65,24 @@ public class PiskvorkyController : Controller
         _context.SaveChanges();
         
         return RedirectToAction("Zobrazit", id);
+    }
+
+    public IActionResult Vytvorit()
+    {
+        Piskvorky novaHra = new Piskvorky();
+        int id = novaHra.Id;
+        _context.PiskvorkyModel.Add(novaHra);
+        _context.SaveChanges();
+        
+        // TODO: posílá se špatně ID
+        
+        return RedirectToAction("Zobrazit", id);
+    }
+
+    public IActionResult Vyhodnotit(int id)
+    {
+        Piskvorky hra = _context.PiskvorkyModel.Find(id);
+        
+        return RedirectToAction("Zobrazit", hra.Id);
     }
 }

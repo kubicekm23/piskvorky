@@ -1,1 +1,13 @@
+@Model WebApplication1.Models.Piskvorky
+
 <h2>Index page</h2>
+
+<a href="/Piskvorky/Vytvorit/" class="btn btn-primary">Založit novou hru</a>
+<br/>
+@{
+    foreach (Piskvorky hra in Model)
+    {
+        <a class="btn btn-secondary" href="/Piskvorky/Zobrazit/?id=@hra.Id">Zobrazit hru</a>
+        <br/>
+    }
+}

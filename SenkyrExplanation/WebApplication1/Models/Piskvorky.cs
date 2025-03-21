@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WebApplication1.Models;
 
 public class Piskvorky
 {
+    [Key]
     public int Id { get; set; }
 
     public string HerniPole { get; set; } = "---------";

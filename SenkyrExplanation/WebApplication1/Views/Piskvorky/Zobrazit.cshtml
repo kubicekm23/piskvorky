@@ -4,6 +4,7 @@
     ViewData["Title"] = "Piškvorky 3x3";
 }
 
+<h3>@Model.StavHry</h3>
 <p>Na tahu je @Model.AktivniHrac</p>
 
 <table class="table-bordered" id="piskvorky-table">
@@ -23,5 +24,5 @@
         <td><a class="btn btn-primary" href="/Piskvorky/Tahnout/?policko=8&id=@Model.Id">@Model.HerniPole.Substring(8, 1)</a></td>
     </tr>
 </table>
-
+<br/>
 <a class="btn btn-danger" href="/Piskvorky/Reset/?id=@Model.Id">Vyresetovat hru</a>
