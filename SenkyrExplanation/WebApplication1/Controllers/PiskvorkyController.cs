@@ -45,13 +45,14 @@ public class PiskvorkyController : Controller
             char[] herniPole = hra.HerniPole.ToCharArray();
             herniPole[policko] = aktivniHrac;
             hra.HerniPole = new string(herniPole);
-
             hra.AktivniHrac = (aktivniHrac == 'X') ? 'O' : 'X';
-            
+
             _context.Update(hra);
             _context.SaveChanges();
+
         }
-        return RedirectToAction("Zobrazit");
+        
+        return RedirectToAction("Zobrazit", new { id = id });
     }
 
     public IActionResult Reset(int id)
@@ -64,25 +65,23 @@ public class PiskvorkyController : Controller
         _context.Update(hra);
         _context.SaveChanges();
         
-        return RedirectToAction("Zobrazit", id);
+        return RedirectToAction("Zobrazit", new { id = id });
     }
 
     public IActionResult Vytvorit()
     {
         Piskvorky novaHra = new Piskvorky();
-        int id = novaHra.Id;
         _context.PiskvorkyModel.Add(novaHra);
         _context.SaveChanges();
+        int id = novaHra.Id;
         
-        // TODO: posílá se špatně ID
-        
-        return RedirectToAction("Zobrazit", id);
+        return RedirectToAction("Zobrazit", new { id = id });
     }
 
     public IActionResult Vyhodnotit(int id)
     {
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
         
-        return RedirectToAction("Zobrazit", hra.Id);
+        return RedirectToAction("Zobrazit", new { id = hra.Id });
     }
 }
