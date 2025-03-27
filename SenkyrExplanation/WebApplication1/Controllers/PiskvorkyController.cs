@@ -102,20 +102,20 @@ public class PiskvorkyController : Controller
     private bool KonecHryPiskvorek(Piskvorky hra)
     {
         char[] herniPole = hra.HerniPole.ToCharArray();
-
+        
         // horizontalní
-        if (herniPole[0] == herniPole[1] && herniPole[1] == herniPole[2]) return true;
-        if (herniPole[3] == herniPole[4] && herniPole[4] == herniPole[5]) return true;
-        if (herniPole[6] == herniPole[7] && herniPole[7] == herniPole[8]) return true;
+        if (herniPole[0] == herniPole[1] && herniPole[1] == herniPole[2] && herniPole[0] != '-') return true;
+        if (herniPole[3] == herniPole[4] && herniPole[4] == herniPole[5] && herniPole[3] != '-') return true;
+        if (herniPole[6] == herniPole[7] && herniPole[7] == herniPole[8] && herniPole[6] != '-') return true;
         
         // křížem
-        if (herniPole[0] == herniPole[3] && herniPole[3] == herniPole[8]) return true;
-        if (herniPole[2] == herniPole[4] && herniPole[4] == herniPole[6]) return true;
+        if (herniPole[0] == herniPole[3] && herniPole[3] == herniPole[8] && herniPole[8] != '-') return true;
+        if (herniPole[2] == herniPole[4] && herniPole[4] == herniPole[6]  && herniPole[6] != '-') return true;
         
         // vertikální
-        if (herniPole[0] == herniPole[3] && herniPole[3] == herniPole[6]) return true;
-        if (herniPole[1] == herniPole[4] && herniPole[4] == herniPole[7]) return true;
-        if (herniPole[2] == herniPole[5] && herniPole[5] == herniPole[8]) return true;
+        if (herniPole[0] == herniPole[3] && herniPole[3] == herniPole[6]  && herniPole[6] != '-') return true;
+        if (herniPole[1] == herniPole[4] && herniPole[4] == herniPole[7]  && herniPole[7] != '-') return true;
+        if (herniPole[2] == herniPole[5] && herniPole[5] == herniPole[8]  && herniPole[8] != '-') return true;
         
         return false;
     }
