@@ -46,9 +46,10 @@ public class PiskvorkyController : Controller
             char[] herniPole = hra.HerniPole.ToCharArray();
             herniPole[policko] = aktivniHrac;
             hra.HerniPole = new string(herniPole);
-            hra.AktivniHrac = (aktivniHrac == 'X') ? 'O' : 'X';
 
             Vyhodnotit(hra.Id);
+            
+            hra.AktivniHrac = (aktivniHrac == 'X') ? 'O' : 'X';
             
             _context.Update(hra);
             _context.SaveChanges();
@@ -87,13 +88,18 @@ public class PiskvorkyController : Controller
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
 
         bool gameOver = KonecHryPiskvorek(hra);
-
-        Console.WriteLine(gameOver);
         
         if (gameOver)
         {
             if (hra.AktivniHrac == 'X') hra.StavHry = "Vyhrál hráč X";
             else hra.StavHry = "Vyhrál hráč O";
+        }
+        else
+        {
+            if (KonecHryPiskvorekRemiza(hra))
+            {
+                hra.StavHry = "Remíza!";
+            }
         }
         
         _context.Update(hra);
@@ -119,6 +125,15 @@ public class PiskvorkyController : Controller
         if (herniPole[0] == herniPole[3] && herniPole[3] == herniPole[6]  && herniPole[6] != '-') return true;
         if (herniPole[1] == herniPole[4] && herniPole[4] == herniPole[7]  && herniPole[7] != '-') return true;
         if (herniPole[2] == herniPole[5] && herniPole[5] == herniPole[8]  && herniPole[8] != '-') return true;
+        
+        return false;
+    }
+    
+    private bool KonecHryPiskvorekRemiza(Piskvorky hra)
+    {
+        char[] herniPole = hra.HerniPole.ToCharArray();
+
+        if (!herniPole.Contains('-')) return true;
         
         return false;
     }
