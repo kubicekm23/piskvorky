@@ -35,6 +35,16 @@ public class PiskvorkyController : Controller
         
         return View(piskvorky);
     }
+    
+    public IActionResult Vytvorit()
+    {
+        Piskvorky novaHra = new Piskvorky();
+        _context.PiskvorkyModel.Add(novaHra);
+        _context.SaveChanges();
+        int id = novaHra.Id;
+        
+        return RedirectToAction("Zobrazit", new { id = id });
+    }
 
     public IActionResult Tahnout(int policko, int id)
     {
@@ -69,16 +79,6 @@ public class PiskvorkyController : Controller
         
         _context.Update(hra);
         _context.SaveChanges();
-        
-        return RedirectToAction("Zobrazit", new { id = id });
-    }
-
-    public IActionResult Vytvorit()
-    {
-        Piskvorky novaHra = new Piskvorky();
-        _context.PiskvorkyModel.Add(novaHra);
-        _context.SaveChanges();
-        int id = novaHra.Id;
         
         return RedirectToAction("Zobrazit", new { id = id });
     }

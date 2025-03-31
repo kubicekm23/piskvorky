@@ -1,15 +1,32 @@
 <div class="text-center">
 
-<h2>Index page</h2>
+    <h2>Index page</h2>
 
-<a href="/Piskvorky/Vytvorit/" class="btn btn-primary">Založit novou hru</a>
-<br/>
-@{
-    foreach (Piskvorky hra in ViewBag.Piskvorky)
-    {
-        <br></br>
-        <a class="btn btn-secondary" href="/Piskvorky/Zobrazit/?id=@hra.Id">Zobrazit hru</a>
-    }
-}
+    <a href="/Piskvorky/Vytvorit/" class="btn btn-primary">Založit novou hru</a>
+    <br/>
+    <br/>
 
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Stav hry</td>
+            <td>hráč na řadě</td>
+            <td>Zobrazit hru</td>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (Piskvorky hra in ViewBag.Piskvorky)
+            {
+                <tr>
+                    <td>@hra.Id</td>
+                    <td>@hra.StavHry</td>
+                    <td>@hra.AktivniHrac</td>
+                    <td><a class="btn btn-secondary" href="/Piskvorky/Zobrazit/?id=@hra.Id">Zobrazit hru</a></td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
 </div>
