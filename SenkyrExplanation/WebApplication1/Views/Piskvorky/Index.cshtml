@@ -12,7 +12,7 @@
             <td>ID</td>
             <td>Stav hry</td>
             <td>hráč na řadě</td>
-            <td>Zobrazit hru</td>
+            <td>Akce</td>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +23,10 @@
                     <td>@hra.Id</td>
                     <td>@hra.StavHry</td>
                     <td>@hra.AktivniHrac</td>
-                    <td><a class="btn btn-secondary" href="/Piskvorky/Zobrazit/?id=@hra.Id">Zobrazit hru</a></td>
+                    <td>
+                        <a class="btn btn-secondary" href="/Piskvorky/Zobrazit/?id=@hra.Id">Zobrazit hru</a>
+                        <a class="btn btn-danger" href="/Piskvorky/Smazat/?id=@hra.Id">Smazat hru</a>
+                    </td>
                 </tr>
             }
         }

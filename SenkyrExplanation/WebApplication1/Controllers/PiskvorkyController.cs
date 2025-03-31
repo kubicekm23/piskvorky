@@ -46,6 +46,14 @@ public class PiskvorkyController : Controller
         return RedirectToAction("Zobrazit", new { id = id });
     }
 
+    public IActionResult Smazat(int id)
+    {
+        var piskvorky = _context.PiskvorkyModel.Find(id);
+        _context.PiskvorkyModel.Remove(piskvorky);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
     [HttpPost]
     public IActionResult Tahnout(int policko, int id)
     {
