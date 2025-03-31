@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Piškvorky 3x3";
 }
-
+<div class="text-center">
 <h3>@Model.StavHry</h3>
 <p>Na tahu je @Model.AktivniHrac</p>
 
@@ -27,3 +27,4 @@
 <br/>
 <a class="btn btn-primary" href="/Piskvorky/Vyhodnotit/?id=@Model.Id">Vyhodnotit hru</a>
 <a class="btn btn-danger" href="/Piskvorky/Reset/?id=@Model.Id">Vyresetovat hru</a>
+</div>

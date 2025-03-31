@@ -23,8 +23,9 @@ public class PiskvorkyController : Controller
     public IActionResult Index()
     {
         var Piskvorky = _context.PiskvorkyModel.ToList();
+        ViewBag.Piskvorky = Piskvorky;
         
-        return View(Piskvorky);
+        return View();
     }
 
     public IActionResult Zobrazit(int id)
@@ -47,6 +48,8 @@ public class PiskvorkyController : Controller
             hra.HerniPole = new string(herniPole);
             hra.AktivniHrac = (aktivniHrac == 'X') ? 'O' : 'X';
 
+            Vyhodnotit(hra.Id);
+            
             _context.Update(hra);
             _context.SaveChanges();
 
