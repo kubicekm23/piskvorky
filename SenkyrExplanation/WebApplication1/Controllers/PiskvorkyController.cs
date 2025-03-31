@@ -90,7 +90,7 @@ public class PiskvorkyController : Controller
         if (gameOver)
         {
             if (hra.AktivniHrac == 'X') hra.StavHry = "Vyhrál hráč X";
-            else hra.StavHry = "Vyhrál hráč Y";
+            else hra.StavHry = "Vyhrál hráč O";
         }
         
         _context.Update(hra);
