@@ -46,6 +46,7 @@ public class PiskvorkyController : Controller
         return RedirectToAction("Zobrazit", new { id = id });
     }
 
+    [HttpPost]
     public IActionResult Tahnout(int policko, int id)
     {
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
@@ -68,10 +69,10 @@ public class PiskvorkyController : Controller
         
         return RedirectToAction("Zobrazit", new { id = id });
     }
-
+    [HttpPost]
     public IActionResult Reset(int id)
     {
-        var hra = _context.PiskvorkyModel.First();
+        var hra = _context.PiskvorkyModel.Find(id);
         hra.HerniPole = "---------";
         
         hra.AktivniHrac = 'X';
