@@ -5,11 +5,9 @@ namespace WebApplication1.Controllers;
 
 public class UserController : Controller
 {
-    private readonly DbContext _context;
-    
-    public UserController(DbContext context)
+    public UserController()
     {
-        _context = context;
+        
     }
     
     public IActionResult Login()
