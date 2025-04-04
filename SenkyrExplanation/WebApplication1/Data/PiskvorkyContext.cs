@@ -10,4 +10,5 @@ public class PiskvorkyContext : DbContext
     }
     
     public DbSet<Piskvorky> PiskvorkyModel { get; set; }
+    public DbSet<UserModel> Users { get; set; }
 }

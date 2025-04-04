@@ -30,7 +30,8 @@ public class PiskvorkyController : Controller
 
     public IActionResult Zobrazit(int id)
     {
-        Console.WriteLine(id);
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
         var piskvorky = _context.PiskvorkyModel.Find(id);
         
         return View(piskvorky);
@@ -38,6 +39,8 @@ public class PiskvorkyController : Controller
     
     public IActionResult Vytvorit()
     {
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
         Piskvorky novaHra = new Piskvorky();
         _context.PiskvorkyModel.Add(novaHra);
         _context.SaveChanges();
@@ -48,7 +51,12 @@ public class PiskvorkyController : Controller
 
     public IActionResult Smazat(int id)
     {
-        var piskvorky = _context.PiskvorkyModel.Find(id);
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
+        Piskvorky? piskvorky = _context.PiskvorkyModel.FirstOrDefault(h => h.Id == id);
+        
+        if (piskvorky == null) return NotFound();
+        
         _context.PiskvorkyModel.Remove(piskvorky);
         _context.SaveChanges();
         return RedirectToAction("Index");
@@ -57,6 +65,8 @@ public class PiskvorkyController : Controller
     [HttpPost]
     public IActionResult Tahnout(int policko, int id)
     {
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
         char aktivniHrac = hra.AktivniHrac;
 
@@ -80,6 +90,8 @@ public class PiskvorkyController : Controller
     [HttpPost]
     public IActionResult Reset(int id)
     {
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
         var hra = _context.PiskvorkyModel.Find(id);
         hra.HerniPole = "---------";
         
@@ -94,6 +106,8 @@ public class PiskvorkyController : Controller
 
     public IActionResult Vyhodnotit(int id)
     {
+        if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
+        
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
 
         bool gameOver = KonecHryPiskvorek(hra);
@@ -145,5 +159,12 @@ public class PiskvorkyController : Controller
         if (!herniPole.Contains('-')) return true;
         
         return false;
+    }
+
+    private bool KontrolaPrihlaseni()
+    {
+        string? prihlasenyUzivatel = HttpContext.Session.GetString("prihlasenyuzivatel");
+        if (prihlasenyUzivatel == null) return false;
+        return true;
     }
 }
