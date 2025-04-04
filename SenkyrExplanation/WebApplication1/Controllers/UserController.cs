@@ -25,9 +25,11 @@ public class UserController : Controller
         Username = Username.Trim();
         Password = Password.Trim();
 
-        UserModel prihlasovanyUzivatel = _context.Users.Where(u => u.Username == Username).FirstOrDefault();
+        UserModel? prihlasovanyUzivatel = _context.Users.Where(u => u.Username == Username).FirstOrDefault();
         
-        if (Password != prihlasovanyUzivatel.Password) return RedirectToAction("Login", "Home");
+        if (prihlasovanyUzivatel == null) return RedirectToAction("Login");
+        
+        if (Password != prihlasovanyUzivatel.Password) return RedirectToAction("Login");
         
         HttpContext.Session.SetString("prihlasenyUzivatel", prihlasovanyUzivatel.Username);
         
@@ -40,22 +42,24 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    public IActionResult Register(string Username, string Password, string PasswordConfirm)
+    public IActionResult Register(string? username, string? password, string? passwordConfirm)
     {
-        if (Username == null || Username.Trim().Length < 3) return RedirectToAction("Register", "Account");
-        if (Password == null || Username.Trim().Length < 5) return RedirectToAction("Register", "Account");
-        if (PasswordConfirm.Trim() != Password.Trim()) return RedirectToAction("Register", "Account");
-        if (_context.Users.Where(u => u.Username == Username) == null) return RedirectToAction("Register", "Account");
+        if (username == null || username.Trim().Length < 1) return RedirectToAction("Register", "User");
+        if (password == null || password.Trim().Length <= 1) return RedirectToAction("Register", "User");
+        if (passwordConfirm == null || passwordConfirm.Trim().Length <= 1) return RedirectToAction("Register", "User");
         
-        Username = Username.Trim();
-        Password = Password.Trim();
+        if (passwordConfirm.Trim() != password.Trim()) return RedirectToAction("Register", "User");
+        if (_context.Users.Any(u => u.Username == username)) return RedirectToAction("Register", "User");
+        
+        username = username.Trim();
+        password = password.Trim();
         
         UserModel registrovanyUzivatel = new UserModel()
         {
-            Username = Username, 
-            Password = BCrypt.Net.BCrypt.HashPassword(Password)
+            Username = username, 
+            Password = BCrypt.Net.BCrypt.HashPassword(password)
         };
-        _context.Add(registrovanyUzivatel);
+        _context.Users.Add(registrovanyUzivatel);
         _context.SaveChanges();
         
         return RedirectToAction("Login");
