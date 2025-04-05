@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
@@ -8,14 +9,20 @@ namespace WebApplication1.Controllers;
 public class UserController : Controller
 {
     private readonly PiskvorkyContext _context;
-    
+
     public UserController(PiskvorkyContext context)
     {
         _context = context;
     }
-    
+
     public IActionResult Login()
     {
+        if (HttpContext.Session.GetString("prihlasenyUzivatel") == "x")
+        {
+            ViewData["Username"] = HttpContext.Session.GetString("prihlasenyUzivatel");
+        }
+        else ViewData["Username"] = "x";
+        
         return View();
     }
 
