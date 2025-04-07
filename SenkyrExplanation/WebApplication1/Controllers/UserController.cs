@@ -36,7 +36,7 @@ public class UserController : Controller
         
         if (prihlasovanyUzivatel == null) return RedirectToAction("Login");
         
-        if (Password != prihlasovanyUzivatel.Password) return RedirectToAction("Login");
+        if (BCrypt.Net.BCrypt.Verify(Password, prihlasovanyUzivatel.Password)) return RedirectToAction("Login");
         
         HttpContext.Session.SetString("prihlasenyUzivatel", prihlasovanyUzivatel.Username);
         
