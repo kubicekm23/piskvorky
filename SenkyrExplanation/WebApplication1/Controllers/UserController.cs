@@ -36,15 +36,10 @@ public class UserController : Controller
         
         UserModel? prihlasovanyUzivatel = _context.Users.FirstOrDefault(u => u.Username == Username);
 
-        Console.WriteLine("BYL JSEM ZDE FANTOMAS");
         if (prihlasovanyUzivatel == null) return RedirectToAction("Login");
-        Console.WriteLine("BYL JSEM ZDE ZAS FANTOMAS");
-        
         if (!BCrypt.Net.BCrypt.Verify(Password, prihlasovanyUzivatel.Password)) return RedirectToAction("Login");
         
         HttpContext.Session.SetString("prihlasenyUzivatel", prihlasovanyUzivatel.Username);
-        
-        Console.WriteLine($" {HttpContext.Session.GetString("prihlasenyUzivatel")} ");
         
         return RedirectToAction("Index", "Piskvorky");
     }

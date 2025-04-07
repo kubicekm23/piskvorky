@@ -41,7 +41,9 @@ public class PiskvorkyController : Controller
     {
         if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
         
-        Piskvorky novaHra = new Piskvorky();
+        int userId = int.Parse(HttpContext.Session.GetString("UserId")!);
+        
+        Piskvorky novaHra = new Piskvorky() {Hrac1Id = userId};
         _context.PiskvorkyModel.Add(novaHra);
         _context.SaveChanges();
         int id = novaHra.Id;
@@ -53,12 +55,17 @@ public class PiskvorkyController : Controller
     {
         if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
         
+        int userId = int.Parse(HttpContext.Session.GetString("UserId")!);
         Piskvorky? piskvorky = _context.PiskvorkyModel.FirstOrDefault(h => h.Id == id);
         
-        if (piskvorky == null) return NotFound();
+        if (piskvorky == null) return RedirectToAction("Index");
+
+        if (piskvorky.Hrac1Id == userId || piskvorky.Hrac2Id == userId)
+        {
+            _context.PiskvorkyModel.Remove(piskvorky);
+            _context.SaveChanges();
+        }
         
-        _context.PiskvorkyModel.Remove(piskvorky);
-        _context.SaveChanges();
         return RedirectToAction("Index");
     }
 
