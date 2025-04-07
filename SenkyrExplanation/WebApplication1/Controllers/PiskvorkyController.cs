@@ -163,8 +163,8 @@ public class PiskvorkyController : Controller
 
     private bool KontrolaPrihlaseni()
     {
-        string? prihlasenyUzivatel = HttpContext.Session.GetString("prihlasenyuzivatel");
-        if (prihlasenyUzivatel == null) return false;
+        string? prihlasenyUzivatel = HttpContext.Session.GetString("prihlasenyUzivatel");
+        if (prihlasenyUzivatel is null or "X") return false;
         return true;
     }
 }

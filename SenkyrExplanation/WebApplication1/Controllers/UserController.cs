@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,10 @@ public class UserController : Controller
         _context = context;
     }
 
+    [HttpGet]
     public IActionResult Login()
     {
-        if (HttpContext.Session.GetString("prihlasenyUzivatel") == "x")
+        if (HttpContext.Session.GetString("prihlasenyUzivatel") != "x")
         {
             ViewData["Username"] = HttpContext.Session.GetString("prihlasenyUzivatel");
         }
@@ -27,20 +29,24 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(string Username, string Password)
+    public IActionResult Login(string? Username, string? Password)
     {
         Username = Username.Trim();
         Password = Password.Trim();
+        
+        UserModel? prihlasovanyUzivatel = _context.Users.FirstOrDefault(u => u.Username == Username);
 
-        UserModel? prihlasovanyUzivatel = _context.Users.Where(u => u.Username == Username).FirstOrDefault();
-        
+        Console.WriteLine("BYL JSEM ZDE FANTOMAS");
         if (prihlasovanyUzivatel == null) return RedirectToAction("Login");
+        Console.WriteLine("BYL JSEM ZDE ZAS FANTOMAS");
         
-        if (BCrypt.Net.BCrypt.Verify(Password, prihlasovanyUzivatel.Password)) return RedirectToAction("Login");
+        if (!BCrypt.Net.BCrypt.Verify(Password, prihlasovanyUzivatel.Password)) return RedirectToAction("Login");
         
         HttpContext.Session.SetString("prihlasenyUzivatel", prihlasovanyUzivatel.Username);
         
-        return RedirectToAction("Zobrazit", "Piskvorky");
+        Console.WriteLine($" {HttpContext.Session.GetString("prihlasenyUzivatel")} ");
+        
+        return RedirectToAction("Index", "Piskvorky");
     }
     
     public IActionResult Register()
