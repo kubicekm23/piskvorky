@@ -2,11 +2,15 @@
     ViewData["Title"] = "Login";
 }
 <h2>Login page</h2>
-
+<p>@ViewData["Username"]</p>
 @{
-    if ()
+    if (ViewData["Username"] != "x")
     {
-        
+        <p>You are already logged in.</p>
+        <p>Would you like to log out first?</p>
+        <form method="post" action="/user/logout" class="user-form">
+            <input type="submit" value="logout"/>
+        </form>
     }
 }
 
