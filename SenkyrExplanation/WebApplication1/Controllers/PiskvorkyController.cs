@@ -53,8 +53,9 @@ public class PiskvorkyController : Controller
 
     public IActionResult Smazat(int id)
     {
+        Console.WriteLine("test");
         if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
-        
+        Console.WriteLine("test");
         int userId = int.Parse(HttpContext.Session.GetString("UserId")!);
         Piskvorky? piskvorky = _context.PiskvorkyModel.FirstOrDefault(h => h.Id == id);
         
@@ -73,7 +74,6 @@ public class PiskvorkyController : Controller
     public IActionResult Tahnout(int policko, int id)
     {
         if (!KontrolaPrihlaseni()) return RedirectToAction("Login", "User");
-        
         Piskvorky hra = _context.PiskvorkyModel.Find(id);
         char aktivniHrac = hra.AktivniHrac;
 
@@ -171,6 +171,10 @@ public class PiskvorkyController : Controller
     private bool KontrolaPrihlaseni()
     {
         string? prihlasenyUzivatel = HttpContext.Session.GetString("prihlasenyUzivatel");
+        Console.WriteLine(prihlasenyUzivatel);
+        if (prihlasenyUzivatel == null) Console.WriteLine("prihlasenyUzivatel is null");
+        else Console.WriteLine(prihlasenyUzivatel.GetType());
+        
         if (prihlasenyUzivatel is null or "X") return false;
         return true;
     }
